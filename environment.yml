@@ -1,0 +1,11 @@
+name: text2video-benchmark
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip:
+      - sentence-transformers==2.7.0
+      - torch==2.3.0
+      - transformers==4.40.2
