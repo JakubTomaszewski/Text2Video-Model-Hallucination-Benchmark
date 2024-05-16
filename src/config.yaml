@@ -1,0 +1,5 @@
+video_captioning:
+  model_name: "GIT_BASE_VATEX"
+
+sentence_similarity:
+  model_name: "all-MiniLM-L6-v2"

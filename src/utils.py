@@ -2,7 +2,7 @@ import cv2
 from PIL import Image
 
 
-def load_video_frames(video_path):
+def load_video_frames(video_path: str):
     cap = cv2.VideoCapture(video_path)
     frames = []
 
@@ -25,4 +25,3 @@ def load_video_frames(video_path):
     
     cap.release()
     return frames
-

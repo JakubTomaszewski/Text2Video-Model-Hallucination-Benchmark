@@ -2,7 +2,7 @@ from sentence_transformers import SentenceTransformer, util
 
 
 class SentenceSimilarityCalculator:
-    def __init__(self, model_name: str = "all-MiniLM-L6-v2"):
+    def __init__(self, model_name: str = "all-MiniLM-L6-v2", **kwargs):
         self.model = SentenceTransformer(model_name)
 
     def calculate_similarity(self, sentence_1: str, sentence_2: str) -> float:

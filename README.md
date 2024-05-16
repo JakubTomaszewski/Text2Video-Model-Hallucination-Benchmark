@@ -9,8 +9,4 @@ https://huggingface.co/models?library=sentence-transformers&pipeline_tag=sentenc
 https://huggingface.co/models?library=sentence-transformers&sort=downloads
 
 
-Download the weights for the mPLUG-2 repo by running the script below:
 
-```bash
-$ sh scripts/download_checkpoints.sh
-```

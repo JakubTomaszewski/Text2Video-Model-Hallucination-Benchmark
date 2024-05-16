@@ -10,36 +10,20 @@ Stage 2: Frame-Prompt consistency:
     - Input the captions accompanied by the initial prompt to an LLM and ask whether it matches the prompt
 """
 
-from pathlib import Path
-from argparse import ArgumentParser
+from config import parse_args
 from utils import load_video_frames
-
-
-def parse_args():
-    parser = ArgumentParser()
-    parser.add_argument("--model", type=str, default="all-MiniLM-L6-v2")
-    parser.add_argument("--video", type=Path, default=Path("video.mp4"))
-    parser.add_argument("--prompt_match_threshold", type=float, default=0.8)
-    return parser.parse_args()
+from text2video_consistency_evaluator import Text2VideoConsistencyEvaluator
 
 
 def main():
     config = parse_args()
+    
     frames = load_video_frames(config.video)
-    # model = SentenceTransformer(config.model)
-    
-    # sentence_1 = "Panda playing a guitar on times square"
-    # sentence_2 = "A panda is having fun playing music with a guitar in a busy place"
-    # # sentence_2 = "A guitar is being played by a panda on times square"
-    # # sentence_2 = "Dog playing a guitar on times square"
-    # # sentence_2 = "A panda with a guitar in a city"
-    
-    # emb1 = model.encode(sentence_1)
-    # emb2 = model.encode(sentence_2)
-    
-    # similarity = util.cos_sim(emb1, emb2)
-    
-    # print("Cosine-Similarity:", similarity)
+    prompt = "A cat playing with a ball"
+
+    text2video_consistency_evaluator = Text2VideoConsistencyEvaluator(config)
+    score = text2video_consistency_evaluator.evaluate(prompt, frames)
+    print(f"Consistency score: {score}")
 
 
 if __name__ == "__main__":
