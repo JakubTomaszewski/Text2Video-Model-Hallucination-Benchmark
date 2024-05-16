@@ -43,6 +43,7 @@ class VideoCaptioner:
             str: generated caption
         """
         frames = [self.transforms(frame) for frame in frames]
+        frames = [frame.unsqueeze(0).cuda() for frame in frames]
         # frames = torch.stack(frames)
         # frames = self.transforms(frames)  # TODO: check if this also works for multiple frames
         
