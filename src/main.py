@@ -19,7 +19,8 @@ def main():
     config = parse_args()
     
     frames = load_video_frames(config.video)
-    prompt = "A cat playing with a ball"
+    #prompt = "A cat playing with a ball"
+    prompt = config.prompt
 
     text2video_consistency_evaluator = Text2VideoConsistencyEvaluator(config)
     score = text2video_consistency_evaluator.evaluate(prompt, frames)
