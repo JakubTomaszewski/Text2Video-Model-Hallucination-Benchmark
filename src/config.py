@@ -10,8 +10,8 @@ def create_parser():
         dest='config_file',
         type=argparse.FileType(mode='r'))
     parser.add_argument("--video", type=str)
-    parser.add_argument("--prompt", type=str)  
-    # parser.add_argument("--prompt_match_threshold", type=float, default=0.8)
+    parser.add_argument("--prompt", type=str)
+    parser.add_argument("--device", type=str, default="cuda")
 
     return parser
 

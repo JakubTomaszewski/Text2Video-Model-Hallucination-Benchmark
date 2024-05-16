@@ -4,9 +4,11 @@ from .video_captioning import VideoCaptioner
 
 
 class VideoConsistencyEvaluator:
-    def __init__(self, video_captoning_config: dict, sentence_similarity_config: dict) -> None:
-        self.video_captioner = VideoCaptioner(**video_captoning_config)
-        self.sentence_similarity_calculator = SentenceSimilarityCalculator(**sentence_similarity_config)
+    def __init__(self, video_captoning_config: dict, 
+                 sentence_similarity_config: dict, 
+                 device: str = "cuda") -> None:
+        self.video_captioner = VideoCaptioner(**video_captoning_config, device=device)
+        self.sentence_similarity_calculator = SentenceSimilarityCalculator(**sentence_similarity_config, device=device)
 
     def evaluate_video_consistency(self, prompt: str, frames: torch.Tensor) -> float:
         """Evaluate the consistency between a video and a prompt.

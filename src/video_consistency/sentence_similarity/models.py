@@ -2,8 +2,9 @@ from sentence_transformers import SentenceTransformer, util
 
 
 class SentenceSimilarityCalculator:
-    def __init__(self, model_name: str = "all-MiniLM-L6-v2", **kwargs):
-        self.model = SentenceTransformer(model_name)
+    def __init__(self, model_name: str = "all-MiniLM-L6-v2", device: str="cuda", **kwargs):
+        self.device = device
+        self.model = SentenceTransformer(model_name).to(device)
 
     def calculate_similarity(self, sentence_1: str, sentence_2: str) -> float:
         """Calculate the cosine similarity between two sentences.

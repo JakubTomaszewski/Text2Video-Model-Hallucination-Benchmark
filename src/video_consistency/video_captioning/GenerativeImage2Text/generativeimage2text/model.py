@@ -4,9 +4,10 @@ from .layers.CLIP import clip
 from .layers.decoder import CaptioningModel
 from .layers.decoder import (TransformerDecoderTextualHead,
                              AutoRegressiveBeamSearch, GeneratorWithBeamSearch)
+from .torch_common import torch_load, load_state_dict
 
 
-def get_git_model(tokenizer, param):
+def get_git_model(tokenizer, param, checkpoint_path, device='cuda'):
     image_encoder = get_image_encoder(
         param.get('image_encoder_type', 'CLIPViT_B_16'),
         input_resolution=param.get('test_crop_size', 224),
@@ -44,6 +45,13 @@ def get_git_model(tokenizer, param):
         loss_type='smooth',
         num_image_with_embedding=param.get('num_image_with_embedding')
     )
+
+    checkpoint = torch_load(checkpoint_path)['model']
+    load_state_dict(model, checkpoint)
+
+    model.to(device)
+    model.eval()
+    
     return model
 
 def get_image_encoder(encoder_type, input_resolution=224):
