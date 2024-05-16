@@ -12,7 +12,7 @@ Stage 2: Frame-Prompt consistency:
 
 from pathlib import Path
 from argparse import ArgumentParser
-from sentence_transformers import SentenceTransformer, util
+from utils import load_video_frames
 
 
 def parse_args():
@@ -25,20 +25,21 @@ def parse_args():
 
 def main():
     config = parse_args()
-    model = SentenceTransformer(config.model)
+    frames = load_video_frames(config.video)
+    # model = SentenceTransformer(config.model)
     
-    sentence_1 = "Panda playing a guitar on times square"
-    sentence_2 = "A panda is having fun playing music with a guitar in a busy place"
-    # sentence_2 = "A guitar is being played by a panda on times square"
-    # sentence_2 = "Dog playing a guitar on times square"
-    # sentence_2 = "A panda with a guitar in a city"
+    # sentence_1 = "Panda playing a guitar on times square"
+    # sentence_2 = "A panda is having fun playing music with a guitar in a busy place"
+    # # sentence_2 = "A guitar is being played by a panda on times square"
+    # # sentence_2 = "Dog playing a guitar on times square"
+    # # sentence_2 = "A panda with a guitar in a city"
     
-    emb1 = model.encode(sentence_1)
-    emb2 = model.encode(sentence_2)
+    # emb1 = model.encode(sentence_1)
+    # emb2 = model.encode(sentence_2)
     
-    similarity = util.cos_sim(emb1, emb2)
+    # similarity = util.cos_sim(emb1, emb2)
     
-    print("Cosine-Similarity:", similarity)
+    # print("Cosine-Similarity:", similarity)
 
 
 if __name__ == "__main__":
