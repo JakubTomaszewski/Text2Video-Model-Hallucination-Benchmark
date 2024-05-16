@@ -4,7 +4,7 @@ from video_captioning import VideoCaptioner
 
 class VideoConsistencyEvaluator:
     def __init__(self):
-        self.video_captioner = VideoCaptioner(model_name="GIT_BASE_VATEX", prefix="")  # TODO: load model name from config
+        self.video_captioner = VideoCaptioner(model_name="GIT_BASE_VATEX")  # TODO: load model name from config
         self.sentence_similarity_calculator = SentenceSimilarityCalculator(model_name="all-MiniLM-L6-v2")  # TODO: load model name from config
 
     def evaluate_video_consistency(self, video, prompt):
