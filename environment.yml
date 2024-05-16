@@ -6,6 +6,15 @@ channels:
 dependencies:
   - python=3.11
   - pip:
+      - azfuse @ git+https://github.com/microsoft/azfuse.git
+      - boto3
+      - opencv-python
+      - pycocotools
+      - pycocoevalcap
+      - pyyaml
       - sentence-transformers==2.7.0
-      - torch==2.3.0
       - transformers==4.40.2
+      - torch==2.3.0
+      - torchvision
+      - transformers
+      - tqdm
