@@ -47,7 +47,8 @@ class VideoCaptioner:
         # frames = torch.stack(frames)
         # frames = self.transforms(frames)  # TODO: check if this also works for multiple frames
         
-
+        self.model.cuda()
+        self.model.eval()
         with torch.no_grad():
             result = self.model({
                 'image': frames,
