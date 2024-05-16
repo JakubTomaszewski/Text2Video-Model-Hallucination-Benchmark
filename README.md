@@ -1,12 +1,26 @@
 # Text-to-Video Model Hallucination Benchmark
 
 
-[Sentence-Transformers](https://sbert.net/index.html) Documentation.
-
-Other models on Hugging Face:
-https://huggingface.co/models?other=sentence-similarity
-https://huggingface.co/models?library=sentence-transformers&pipeline_tag=sentence-similarity&sort=downloads
-https://huggingface.co/models?library=sentence-transformers&sort=downloads
+## Introduction
 
 
+
+## Environment Setup
+
+```
+$ conda env create -f environment.yml
+```
+
+or using pip
+
+```
+$ pip install -r requirements.txt
+```
+
+
+## Runnning the code
+
+```
+$ python main.py --config-file config.yaml --video path/to/video.mp4
+```
 
