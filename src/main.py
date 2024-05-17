@@ -17,9 +17,8 @@ from text2video_consistency_evaluator import Text2VideoConsistencyEvaluator
 
 def main():
     config = parse_args()
-    
+
     frames = load_video_frames(config.video)
-    #prompt = "A cat playing with a ball"
     prompt = config.prompt
 
     text2video_consistency_evaluator = Text2VideoConsistencyEvaluator(config)
