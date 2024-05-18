@@ -12,6 +12,7 @@ def create_parser():
     parser.add_argument("--video", type=str)
     parser.add_argument("--prompt", type=str)
     parser.add_argument("--device", type=str, default="cuda")
+    parser.add_argument("--debug", action="store_true")
 
     return parser
 

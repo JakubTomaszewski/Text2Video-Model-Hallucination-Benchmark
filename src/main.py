@@ -22,7 +22,7 @@ def main():
     prompt = config.prompt
 
     text2video_consistency_evaluator = Text2VideoConsistencyEvaluator(config)
-    score = text2video_consistency_evaluator.evaluate(prompt, frames)
+    score = text2video_consistency_evaluator.evaluate(prompt, frames, debug=config.debug)
     print(f"Consistency score: {score}")
 
 
