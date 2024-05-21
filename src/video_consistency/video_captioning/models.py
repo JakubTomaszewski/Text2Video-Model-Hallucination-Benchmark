@@ -2,7 +2,6 @@ import os
 import torch
 
 from transformers import BertTokenizer
-
 from .GenerativeImage2Text import load_from_yaml_file, get_git_model, get_image_transform
 
 

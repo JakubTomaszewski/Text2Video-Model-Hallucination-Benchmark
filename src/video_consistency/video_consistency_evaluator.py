@@ -10,7 +10,7 @@ class VideoConsistencyEvaluator:
         self.video_captioner = VideoCaptioner(**video_captoning_config, device=device)
         self.prompt_similarity_evaluator = SentenceSimilarityCalculator(**sentence_similarity_config, device=device)
 
-    def evaluate_video_consistency(self, prompt: str, frames: torch.Tensor, debug: bool = False) -> float:
+    def evaluate(self, prompt: str, frames: torch.Tensor, debug: bool = False) -> float:
         """Evaluate the consistency between a video and a prompt.
 
         Args:

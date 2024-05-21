@@ -13,6 +13,7 @@ Stage 2: Frame-Prompt consistency:
 from config import parse_args
 from utils import load_video_frames
 from text2video_consistency_evaluator import Text2VideoConsistencyEvaluator
+from video_consistency.video_consistency_evaluator import VideoConsistencyEvaluator
 
 
 def main():
@@ -21,7 +22,11 @@ def main():
     frames = load_video_frames(config.video)
     prompt = config.prompt
 
-    text2video_consistency_evaluator = Text2VideoConsistencyEvaluator(config)
+    video_consistency_evaluator = VideoConsistencyEvaluator(config.video_captioning,
+                                                            config.sentence_similarity,
+                                                            config.device)
+
+    text2video_consistency_evaluator = Text2VideoConsistencyEvaluator(config, video_consistency_evaluator, None)
     score = text2video_consistency_evaluator.evaluate(prompt, frames, debug=config.debug)
     print(f"Consistency score: {score}")
 
