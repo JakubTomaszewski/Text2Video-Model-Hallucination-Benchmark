@@ -6,7 +6,19 @@ class SentenceSimilarityCalculator:
         self.device = device
         self.model = SentenceTransformer(model_name).to(device)
 
-    def calculate_similarity(self, sentence_1: str, sentence_2: str) -> float:
+    def evaluate(self, sentence_1: str, sentence_2: str) -> float:
+        """Calculate the similarity between two sentences.
+
+        Args:
+            sentence_1 (str): sentence 1
+            sentence_2 (str): sentence 2
+
+        Returns:
+            float: similarity between the two sentences
+        """
+        return self._calculate_similarity(sentence_1, sentence_2)
+
+    def _calculate_similarity(self, sentence_1: str, sentence_2: str) -> float:
         """Calculate the cosine similarity between two sentences.
 
         Args:
