@@ -2,4 +2,5 @@ video_captioning:
   model_name: "GIT_BASE_VATEX"
 
 sentence_similarity:
-  model_name: "all-MiniLM-L6-v2"
+  model_name: "meta-llama/Meta-Llama-3-8B-Instruct"
+  input_prompt: "You are evaluating, whether the second sentence has the same meaning as the first sentence. The first sentence is denoted by 'First sentence:', and the second sentence is denoted by 'Second sentence:' If the second sentence has the same meaning as the first sentence, output '1'. If the second sentence has a different meaning, output '0'. Do not output anything else."
