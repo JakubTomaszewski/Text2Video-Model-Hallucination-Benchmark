@@ -13,16 +13,16 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from config import parse_args
+from config import create_parser, parse_args
 from utils import load_video_frames
 from text2video_consistency_evaluator import Text2VideoConsistencyEvaluator
 from video_consistency.video_consistency_evaluator import VideoConsistencyEvaluator
 
 
 
-
 def main():
-    config = parse_args()
+    parser = create_parser()
+    config = parse_args(parser)
 
     frames = load_video_frames(config.video)
     prompt = config.prompt
