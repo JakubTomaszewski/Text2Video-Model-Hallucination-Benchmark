@@ -1,3 +1,4 @@
+import os
 import torch
 import transformers
 
@@ -23,7 +24,8 @@ class SentenceSimilarityEvaluator:
             task="text-generation",
             model=model_name,
             device=device,
-            model_kwargs={"torch_dtype": torch.bfloat16}
+            model_kwargs={"torch_dtype": torch.bfloat16},
+            token=os.environ.get("HF_TOKEN", None)
         )
         return model
 

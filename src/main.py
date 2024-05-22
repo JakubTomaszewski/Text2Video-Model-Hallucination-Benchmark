@@ -14,6 +14,10 @@ from config import parse_args
 from utils import load_video_frames
 from text2video_consistency_evaluator import Text2VideoConsistencyEvaluator
 from video_consistency.video_consistency_evaluator import VideoConsistencyEvaluator
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 
 def main():
