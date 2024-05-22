@@ -20,6 +20,7 @@ class SentenceSimilarityEvaluator:
         ]
 
     def get_model(self, model_name: str, device: str) -> transformers.pipeline:
+        print("Using token:", os.environ.get("HF_TOKEN", None))
         model = transformers.pipeline(
             task="text-generation",
             model=model_name,
@@ -33,7 +34,7 @@ class SentenceSimilarityEvaluator:
         user_message_content = f"First sentence: '{sentence_1}'. Second sentence: '{sentence_2}'."
         messages = [
             self.prompt,
-            Message(role=Role.USER, content=user_message_content),
+            Message(role=Role.USER, content=user_message_content)
         ]
 
         conversation = self.model.tokenizer.apply_chat_template(

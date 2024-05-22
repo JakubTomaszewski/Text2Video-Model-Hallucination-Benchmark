@@ -1,5 +1,5 @@
 from enum import Enum
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 
 
 class Role(Enum):
@@ -13,8 +13,5 @@ class Message:
     role: Role
     content: str
 
-    def __str__(self) -> str:
-        return asdict(self)
-
-    def __repr__(self) -> str:
-        return asdict(self)
+    def to_dict(self) -> dict:
+        return dict(role=self.role.value, content=self.content)

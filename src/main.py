@@ -9,15 +9,16 @@ Stage 2: Frame-Prompt consistency:
     - Generate a list of captions for each video frame using the seedbench pipeline
     - Input the captions accompanied by the initial prompt to an LLM and ask whether it matches the prompt
 """
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from config import parse_args
 from utils import load_video_frames
 from text2video_consistency_evaluator import Text2VideoConsistencyEvaluator
 from video_consistency.video_consistency_evaluator import VideoConsistencyEvaluator
-from dotenv import load_dotenv
 
 
-load_dotenv()
 
 
 def main():
