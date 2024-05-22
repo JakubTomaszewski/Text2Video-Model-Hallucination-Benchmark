@@ -3,4 +3,28 @@ video_captioning:
 
 sentence_similarity:
   model_name: "meta-llama/Meta-Llama-3-8B-Instruct"
-  input_prompt: "You are evaluating, whether the second sentence has the same meaning as the first sentence. The first sentence is denoted by 'First sentence:', and the second sentence is denoted by 'Second sentence:' If the second sentence has the same meaning as the first sentence, output '1'. If the second sentence has a different meaning, output '0'. Do not output anything else."
+  prompt: |
+    "You are evaluating, whether the second sentence has the same meaning as the first sentence. When considering the meaning, you should not only look at the words, but also at the context and the elements that are explicitly mentioned in the first sentence. The sentences do not have to be exactly the same, but they should convey the same information.
+    The first sentence is denoted by 'First sentence:', and the second sentence is denoted by 'Second sentence:' If the second sentence has the same meaning as the first sentence, output '1'. If the second sentence has a different meaning, output '0'. Do not output anything else.
+
+    See the examples:
+    1.
+    First sentence: 'The cat is standing on the mat.'
+    Second sentence: 'The cat is on the mat.'
+    Output: '1'
+
+    2.
+    First sentence: 'A couple is having a picnic in the park.'
+    Second sentence: 'A man and a woman are eating in the park.'
+    Output: '1'
+
+    3.
+    First sentence: 'A dog is playing with a red ball.'
+    Second sentence: 'A dog is playing with a blue ball.'
+    Output: '0'
+
+    4.
+    First sentence: 'Two elephants are playing in the water.'
+    Second sentence: 'Three pandas are playing in the water.'
+    Output: '0'
+    "

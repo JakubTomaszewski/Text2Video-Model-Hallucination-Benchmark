@@ -36,6 +36,7 @@ class SentenceSimilarityEvaluator:
             self.prompt,
             Message(role=Role.USER, content=user_message_content)
         ]
+        messages = map(lambda message: message.to_dict(), messages)
 
         conversation = self.model.tokenizer.apply_chat_template(
             messages,
@@ -64,5 +65,4 @@ class SentenceSimilarityEvaluator:
             temperature=0.6,
             top_p=0.9,
         )
-        print("Sentence similarity output:", outputs[0]["generated_text"])
-        return outputs[0]["generated_text"][len(self.prompt):]
+        return outputs[0]["generated_text"][len(conversation):]
