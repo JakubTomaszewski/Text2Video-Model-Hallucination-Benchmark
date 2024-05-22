@@ -28,13 +28,14 @@ def main():
                                                                       None)
 
     file_names = os.listdir(config.directory)
-    file_names = [os.path.join(config.directory, file) for file in file_names]
+    file_paths = [os.path.join(config.directory, file) for file in file_names]
 
-    for i, video_name in enumerate(file_names):
-        prompt = os.path.basename(video_name).strip(".mp4")
-        frames = load_video_frames(os.path.join(config.directory, video_name))
+    for i, video_path in enumerate(file_paths):
+        prompt = os.path.basename(video_path).strip(".mp4")
+        frames = load_video_frames(video_path)
 
-        print(f"Running script for video {i+1}/{len(file_names)}: {video_name}\nprompt: {prompt}\n")
+        print("-" * 50)
+        print(f"Running script for video {i+1}/{len(file_paths)}: {video_path}\nprompt: {prompt}")
         score = text2video_consistency_evaluator.evaluate(prompt, frames, debug=config.debug)
         print(f"Consistency score: {score}")
 
