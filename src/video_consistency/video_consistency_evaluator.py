@@ -1,5 +1,5 @@
 import torch
-from .sentence_similarity import SentenceSimilarityCalculator
+from .sentence_similarity import SentenceSimilarityEvaluator
 from .video_captioning import VideoCaptioner
 
 
@@ -8,7 +8,7 @@ class VideoConsistencyEvaluator:
                  sentence_similarity_config: dict,
                  device: str = "cuda") -> None:
         self.video_captioner = VideoCaptioner(**video_captoning_config, device=device)
-        self.prompt_similarity_evaluator = SentenceSimilarityCalculator(**sentence_similarity_config, device=device)
+        self.prompt_similarity_evaluator = SentenceSimilarityEvaluator(**sentence_similarity_config, device=device)
 
     def evaluate(self, prompt: str, frames: torch.Tensor, debug: bool = False) -> float:
         """Evaluate the consistency between a video and a prompt.

@@ -1,1 +1,1 @@
-from .models import SentenceSimilarityCalculator
+from .models import SentenceSimilarityEvaluator
