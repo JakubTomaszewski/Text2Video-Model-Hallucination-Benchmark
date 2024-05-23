@@ -9,16 +9,15 @@ def create_parser():
         '--config-file',
         dest='config_file',
         type=argparse.FileType(mode='r'))
-    parser.add_argument("--video", type=str)
-    parser.add_argument("--prompt", type=str)
+    parser.add_argument("--video", type=str, required=False)
+    parser.add_argument("--prompt", type=str, required=False)
     parser.add_argument("--device", type=str, default="cuda")
     parser.add_argument("--debug", action="store_true")
 
     return parser
 
 
-def parse_args():
-    parser = create_parser()
+def parse_args(parser):
     args = parser.parse_args()
     if args.config_file:
         data = yaml.safe_load(args.config_file)

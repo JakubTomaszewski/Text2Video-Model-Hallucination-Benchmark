@@ -22,9 +22,9 @@ class Text2VideoConsistencyEvaluator:
             float: similarity between the generated caption and the text prompt
         """
         video_consistency_score = self.video_consistency_evaluator.evaluate(text_prompt, frames, debug=debug)
+        return video_consistency_score
         # frame_consistency_score = self.frame_consistency_evaluator.evaluate(frames, text_prompt)
-
-        return self.calculate_score(video_consistency_score, 0)
+        # return self.calculate_score(video_consistency_score, 0)
 
     def calculate_score(self, video_consistency_score, frame_consistency_score):
         return (video_consistency_score + frame_consistency_score) / 2
