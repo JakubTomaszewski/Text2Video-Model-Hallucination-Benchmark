@@ -3,17 +3,17 @@ from transformers import DetrImageProcessor, DetrForObjectDetection
 
 
 class ObjectCounter:
-    def __init__(self, processor: DetrImageProcessor, model: DetrForObjectDetection, device: str="cuda", **kwargs) -> None:
+    def __init__(self, processor: str, model: str, device: str="cuda", **kwargs) -> None:
         """Count the number of objects of the same instance in a single image
 
         Args:
-            processor (DetrImageProcessor): prepares the images for the object detector
-            model (DetrForObjectDetection): a convolutional backbone that detects objects in an image
+            processor (str): prepares the images for the object detector
+            model (str): a convolutional backbone that detects objects in an image
             device (str): the device used to run the model
         """
 
-        self.processor = processor
-        self.model = model
+        self.processor = DetrImageProcessor.from_pretrained(processor, revision="no_timm")
+        self.model = DetrForObjectDetection.from_pretrained(model, revision="no_timm")
 
     def count_objects(self, image: torch.Tensor) -> dict:
         """Count the number of objects of the same instance in a single image

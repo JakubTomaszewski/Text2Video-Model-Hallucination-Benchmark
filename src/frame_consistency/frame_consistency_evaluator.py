@@ -1,6 +1,5 @@
 import torch
 from object_count import ObjectCounter
-from transformers import DetrImageProcessor, DetrForObjectDetection
 import json
 
 
@@ -8,11 +7,8 @@ class FrameConsistencyEvaluator:
     def __init__(self, object_counter_config: dict, prompts_path: str,
                  device: str = "cuda") -> None:
 
-        processor = DetrImageProcessor.from_pretrained(object_counter_config.image_processor_name, revision="no_timm")
-        model = DetrForObjectDetection.from_pretrained(object_counter_config.image_model_name, revision="no_timm")
-
-        self.object_counter = ObjectCounter(processor,
-                                            model,
+        self.object_counter = ObjectCounter(object_counter_config.image_processor_name,
+                                            object_counter_config.image_model_name,
                                             object_counter_config.device)
 
         with open(prompts_path) as json_file:
