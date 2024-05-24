@@ -11,9 +11,10 @@ Stage 2: Frame-Prompt consistency:
 """
 
 from config import parse_args
-from utils import load_video_frames
+from utils import load_video_frames, rename_json_objects
 from text2video_consistency_evaluator import Text2VideoConsistencyEvaluator
 from video_consistency.video_consistency_evaluator import VideoConsistencyEvaluator
+from frame_consistency.frame_consistency_evaluator import FrameConsistencyEvaluator
 
 
 def main():
@@ -29,6 +30,18 @@ def main():
     text2video_consistency_evaluator = Text2VideoConsistencyEvaluator(config, video_consistency_evaluator, None)
     score = text2video_consistency_evaluator.evaluate(prompt, frames, debug=config.debug)
     print(f"Consistency score: {score}")
+
+    # Object consistency evaluation
+    rename_json_objects(json_file_path=config.json_file_path, output_file_path=config.output_file_path)
+
+    frame_consistency_evaluator = FrameConsistencyEvaluator(object_counter_config=config,
+                                                            prompts_path=config.output_file_path,
+                                                            device=config.device)
+
+    frame_object_score, frame_count_score = frame_consistency_evaluator.evaluate(prompt, frames, config.debug)
+
+    print(f"Unique object score: {frame_object_score}")
+    print(f"Unique object score: {frame_count_score}")
 
 
 if __name__ == "__main__":

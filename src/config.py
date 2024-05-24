@@ -13,7 +13,10 @@ def create_parser():
     parser.add_argument("--prompt", type=str)
     parser.add_argument("--device", type=str, default="cuda")
     parser.add_argument("--debug", action="store_true")
-
+    parser.add_argument("--json_file_path", type=str, default="prompts.json")
+    parser.add_argument("--output_file_path", type=str, default="modified_prompts.json")
+    parser.add_argument("--image_processor_name", type=str, default="facebook/detr-resnet-50")
+    parser.add_argument("--image_model_name", type=str, default="facebook/detr-resnet-50")
     return parser
 
 

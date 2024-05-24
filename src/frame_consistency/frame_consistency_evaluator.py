@@ -1,17 +1,24 @@
 import torch
 from object_count import ObjectCounter
+from transformers import DetrImageProcessor, DetrForObjectDetection
 import json
 
 
 class FrameConsistencyEvaluator:
     def __init__(self, object_counter_config: dict, prompts_path: str,
                  device: str = "cuda") -> None:
-        self.object_counter = ObjectCounter(**object_counter_config, device=device)
+
+        processor = DetrImageProcessor.from_pretrained(object_counter_config.image_processor_name, revision="no_timm")
+        model = DetrForObjectDetection.from_pretrained(object_counter_config.image_model_name, revision="no_timm")
+
+        self.object_counter = ObjectCounter(processor,
+                                            model,
+                                            object_counter_config.device)
 
         with open(prompts_path) as json_file:
             self.prompts_data = json.load(json_file)
 
-    def get_objects(self, prompt: str):
+    def get_objects_prompt(self, prompt: str):
         """
 
         Args:
@@ -52,7 +59,9 @@ class FrameConsistencyEvaluator:
         if debug:
             print("Object count:", frames_dict)
 
-        prompted_objects = self.get_objects(prompt=prompt)
+        # gets the objects in the prompt
+        prompted_objects = self.get_objects_prompt(prompt=prompt)
+
         try:
             n_objects = len(prompted_objects)
         except TypeError:

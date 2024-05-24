@@ -12,8 +12,8 @@ class ObjectCounter:
             device (str): the device used to run the model
         """
 
-        self.model = model
         self.processor = processor
+        self.model = model
 
     def count_objects(self, image: torch.Tensor) -> dict:
         """Count the number of objects of the same instance in a single image
