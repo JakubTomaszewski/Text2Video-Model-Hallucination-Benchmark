@@ -1,20 +1,31 @@
 import torch
+from color import ColorIdentifier
 from object_count import ObjectCounter
 from transformers import DetrImageProcessor, DetrForObjectDetection
 import json
 
 
 class FrameConsistencyEvaluator:
-    def __init__(self, object_counter_config: dict, prompts_path: str,
+    def __init__(self, config: dict, prompts_path: str,
                  device: str = "cuda") -> None:
+        """
+        Args:
+            object_counter_config (dict): configuration for the object counter model
+            prompts_path (str): path to the prompts file
+            device (str): device to run the object counter model"""
 
-        processor = DetrImageProcessor.from_pretrained(object_counter_config.image_processor_name, revision="no_timm")
-        model = DetrForObjectDetection.from_pretrained(object_counter_config.image_model_name, revision="no_timm")
+        # Object counter
+        processor = DetrImageProcessor.from_pretrained(config.image_processor_name, revision="no_timm")
+        model = DetrForObjectDetection.from_pretrained(config.image_model_name, revision="no_timm")
 
         self.object_counter = ObjectCounter(processor,
                                             model,
-                                            object_counter_config.device)
+                                            config.device)
+        
+        # Color identifier
+        self.color_identifier = ColorIdentifier(quantization=config.quantization, device=device)
 
+        # Load prompts
         with open(prompts_path) as json_file:
             self.prompts_data = json.load(json_file)
 

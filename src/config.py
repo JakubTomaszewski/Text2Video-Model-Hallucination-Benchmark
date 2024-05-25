@@ -17,6 +17,8 @@ def create_parser():
     parser.add_argument("--output_file_path", type=str, default="modified_prompts.json")
     parser.add_argument("--image_processor_name", type=str, default="facebook/detr-resnet-50")
     parser.add_argument("--image_model_name", type=str, default="facebook/detr-resnet-50")
+    parser.add_argument("--quantization", type=bool, default=True, help="Whether to quantize the cogvlm model or not to use less gpu resources but with less accuracy.")
+
     return parser
 
 
