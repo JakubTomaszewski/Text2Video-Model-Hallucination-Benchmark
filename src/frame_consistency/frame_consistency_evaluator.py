@@ -1,7 +1,6 @@
 import torch
 from color import ColorIdentifier
 from object_count import ObjectCounter
-from transformers import DetrImageProcessor, DetrForObjectDetection
 import json
 
 
@@ -14,15 +13,10 @@ class FrameConsistencyEvaluator:
             prompts_path (str): path to the prompts file
             device (str): device to run the object counter model"""
 
-        # Object counter
-        processor = DetrImageProcessor.from_pretrained(config.image_processor_name, revision="no_timm")
-        model = DetrForObjectDetection.from_pretrained(config.image_model_name, revision="no_timm")
-
-        self.object_counter = ObjectCounter(processor,
-                                            model,
+        self.object_counter = ObjectCounter(config.image_processor_name,
+                                            config.image_model_name,
                                             config.device)
-        
-        # Color identifier
+
         self.color_identifier = ColorIdentifier(quantization=config.quantization, device=device)
 
         # Load prompts
@@ -42,7 +36,7 @@ class FrameConsistencyEvaluator:
             if prompt_data["sentence"] == prompt:
                 return prompt_data["object"]
 
-    def evaluate(self, prompt: str, frames: torch.Tensor, debug: bool = False) -> tuple[float, float]:
+    def evaluate(self, prompt: str, frames: torch.Tensor, debug: bool = False) -> tuple(float, float):
         """Evaluate the consistency between video frames and a prompt.
 
         Args:
