@@ -67,12 +67,12 @@ class FrameConsistencyEvaluator:
             frame_count_score: corresponds to the similarity between the number of object instances in the video
             and the prompt.
         """
-        ############## Color identification #################
+        ############## Color identification or Attribution #################
         prompted_colors = self.get_objects_prompt(prompt=prompt)
         self.color_identifier.inference_video(batch=2, frames=frames, query=prompt, prompted_colors=prompted_colors)
-        ### evaluate
-        #####################################################
+        ####################################################################
 
+        ############## Object Detection and Counting #######################
         # it supposes that the number of frames is in the first dimension
         n_frames = frames.shape[0]
 
