@@ -12,11 +12,12 @@ class FrameConsistencyEvaluator:
             object_counter_config (dict): configuration for the object counter model
             prompts_path (str): path to the prompts file
             device (str): device to run the object counter model"""
-
+        # Load object counter
         self.object_counter = ObjectCounter(config.image_processor_name,
                                             config.image_model_name,
                                             config.device)
 
+        # Load color identifier
         self.color_identifier = ColorIdentifier(quantization=config.quantization, device=device)
 
         # Load prompts
@@ -36,6 +37,21 @@ class FrameConsistencyEvaluator:
             if prompt_data["sentence"] == prompt:
                 return prompt_data["object"]
 
+
+    def get_colors_prompt(self, prompt: str):
+        """
+
+        Args:
+            prompt (str): prompt to generate the video
+        Returns:
+            dict: number of objects in the video prompt
+        """
+
+        for prompt_data in self.prompts_data['prompts']:
+            if prompt_data["sentence"] == prompt:
+                return prompt_data["color"]
+    
+ 
     def evaluate(self, prompt: str, frames: torch.Tensor, debug: bool = False) -> tuple(float, float):
         """Evaluate the consistency between video frames and a prompt.
 
@@ -51,6 +67,11 @@ class FrameConsistencyEvaluator:
             frame_count_score: corresponds to the similarity between the number of object instances in the video
             and the prompt.
         """
+        ############## Color identification #################
+        prompted_colors = self.get_objects_prompt(prompt=prompt)
+        self.color_identifier.inference_video(batch=2, frames=frames, query=prompt, prompted_colors=prompted_colors)
+        ### evaluate
+        #####################################################
 
         # it supposes that the number of frames is in the first dimension
         n_frames = frames.shape[0]

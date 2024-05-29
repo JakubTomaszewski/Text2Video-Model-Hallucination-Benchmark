@@ -4,10 +4,9 @@ import json
 
 def arg_parser():
     parser = argparse.ArgumentParser()
-    # parser.add_argument("--output_dir", type=str, default='output_backup/output', help="Path to the output folder where the results will be saved.")
-    parser.add_argument("--output_dir", type=str, default='output_intervlm', help="Path to the output folder where the results will be saved.")
-    parser.add_argument("--eval_dir", type=str, default='evaluation_res_intervlm', help="Path to the evaluation folder where the results will be saved.")
-    parser.add_argument("--template", type=int ,default=4, help="Number of the template to use.")
+    parser.add_argument("--output_dir", type=str, default='output_backup/output', help="Path to the output folder where the results from the cogvlm or intervL model are saved.")
+    parser.add_argument("--eval_dir", type=str, default='color_res', help="Path to the evaluation folder where the results will be saved.")
+    parser.add_argument("--model", type=str ,default="cogvlm", help="The model that generated the results.")
     return parser.parse_args()
 
 def load_json(filepath):
@@ -27,7 +26,7 @@ def find_color_acc(output_dir, template, gt_word=None):
                 frames = data["frames"]
                 pred = []
                 for fr, sentence in frames.items():
-                    pred.append(1 if gt_color in sentence else 0)
+                    pred.append(1 if gt_color.lower() in sentence.lower() else 0)
                 object_acc.append(sum(pred)/len(pred))
                 # print(sum(pred)/len(pred), gt_color)
         video_acc[filename] = sum(object_acc)/len(object_acc)
@@ -39,11 +38,10 @@ def template_color(output_dir, template, gt_word=None):
     return video_accuracy
 
 def model_acc(output_dir):
-    # acc_t1 = template_color(output_dir, 1)
-    # acc_t2 = template_color(output_dir, 2)
-    # acc_t3 = template_color(output_dir, 3)
-    # total_acc = (acc_t1 + acc_t2 + acc_t3)/3
-    total_acc={}
+    acc_t1 = template_color(output_dir, 1)
+    acc_t2 = template_color(output_dir, 2)
+    acc_t3 = template_color(output_dir, 3)
+    total_acc = (acc_t1 + acc_t2 + acc_t3)/3
 
     color_confusion = template_color(output_dir, 4, gt_word="Yes")
     return total_acc, color_confusion
@@ -53,7 +51,6 @@ if __name__ == "__main__":
     os.makedirs(args.eval_dir, exist_ok=True)
     models_2 = []
     models_5 = []
-
 
     for models in os.listdir(args.output_dir):
         for sec in os.listdir(os.path.join(args.output_dir, models)):
@@ -65,17 +62,10 @@ if __name__ == "__main__":
                 models_5.append((models, sec, acc, color_confusion))
             # break
 
-    with open(os.path.join(args.eval_dir, "evaluation.txt"), "w") as f:
-        f.write("| Model Name | Duration | Accuracy | Color Confusion|\n")
-        print("| Model Name | Duration | Accuracy | Color Confusion|")
+    # create a csv file
+    with open(os.path.join(args.eval_dir, args.model + "_evaluation.csv"), "w") as f:
+        f.write("model_name,video,color,confusion\n")
         for model in models_2:
-            f.write(f"| {model[0]} | {model[1]} | {model[2]} | {model[3]} |\n")
-            print(f"| {model[0]} | {model[1]} | {model[2]} | {model[3]} |")
-        print("------")
+            f.write(f"{model[0]}, {model[1]}, {model[2]}, {model[3]}\n") 
         for model in models_5:
-            f.write(f"| {model[0]} | {model[1]} | {model[2]} | {model[3]} |\n")
-            print(f"| {model[0]} | {model[1]} | {model[2]} | {model[3]} |")
-    print("Evaluation saved in evaluation.txt")
-
-
-
+            f.write(f"{model[0]}, {model[1]}, {model[2]}, {model[3]}\n")
