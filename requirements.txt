@@ -5,7 +5,6 @@ pycocotools
 pycocoevalcap
 pyyaml
 python-dotenv
-sentence-transformers==2.7.0
 transformers==4.40.2
 torch==2.3.0
 torchvision
