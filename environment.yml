@@ -1,0 +1,20 @@
+name: text2video-benchmark
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip:
+      - azfuse @ git+https://github.com/microsoft/azfuse.git
+      - boto3
+      - opencv-python
+      - pycocotools
+      - pycocoevalcap
+      - pyyaml
+      - python-dotenv
+      - transformers==4.40.2
+      - torch==2.3.0
+      - torchvision
+      - transformers
+      - tqdm
