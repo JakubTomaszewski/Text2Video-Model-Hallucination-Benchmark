@@ -1,7 +1,8 @@
+import torch
 from abc import ABC, abstractmethod
 
 
 class BaseEvaluator(ABC):
     @abstractmethod
-    def evaluate(self, *args, **kwargs):
+    def __call__(self, prompt: str, frames: torch.Tensor, **kwargs) -> float:
         pass

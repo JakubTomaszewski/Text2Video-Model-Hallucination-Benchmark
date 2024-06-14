@@ -1,30 +1,27 @@
-from datatypes import BaseEvaluator
-
-
 class Text2VideoConsistencyEvaluator:
+    """Evaluates the consistency between the text prompt and the video frames using a pipeline of tasks."""
     def __init__(self,
                  config: dict,
-                 video_consistency_evaluator: BaseEvaluator,
-                 frame_consistency_evaluator: BaseEvaluator
+                 tasks: dict[str, callable],
                  ) -> None:
-        self.device = config.device
-        self.video_consistency_evaluator = video_consistency_evaluator
-        self.frame_consistency_evaluator = frame_consistency_evaluator
+        """Initializes the Text2VideoConsistencyEvaluator.
 
-    def evaluate(self, text_prompt, frames, debug=False):
-        """Evaluate the consistency between a text prompt and video frames.
+        Args:
+            config (dict): configuration dictionary
+            tasks (dict[str, callable]): dictionary containing the tasks in the pipeline
+        """
+        self.device = config.device
+        self.tasks: dict[str, callable] = tasks
+
+    def evaluate(self, text_prompt, frames, debug=False) -> dict[str, float]:
+        """Evaluate the consistency between the text prompt and the video frames using the tasks in the pipeline.
 
         Args:
             text_prompt (str): text prompt
             frames (torch.Tensor): tensor containing the frames of the video
+            debug (bool, optional): whether to print debug information. Defaults to False.
 
         Returns:
-            float: similarity between the generated caption and the text prompt
+            dict[str, float]: dictionary containing the scores for each task
         """
-        video_consistency_score = self.video_consistency_evaluator.evaluate(text_prompt, frames, debug=debug)
-        return video_consistency_score
-        # frame_consistency_score = self.frame_consistency_evaluator.evaluate(frames, text_prompt)
-        # return self.calculate_score(video_consistency_score, 0)
-
-    def calculate_score(self, video_consistency_score, frame_consistency_score):
-        return (video_consistency_score + frame_consistency_score) / 2
+        return {task_name: task(text_prompt, frames, debug=debug) for task_name, task in self.tasks.items()}
