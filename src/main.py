@@ -16,7 +16,7 @@ load_dotenv()
 from config import create_parser, parse_args
 from utils import load_video_frames
 from text2video_consistency_evaluator import Text2VideoConsistencyEvaluator
-from video_consistency.video_consistency_evaluator import VideoConsistencyEvaluator
+from evaluators import VideoCaptionConsistencyEvaluator
 
 
 
@@ -27,13 +27,17 @@ def main():
     frames = load_video_frames(config.video)
     prompt = config.prompt
 
-    video_consistency_evaluator = VideoConsistencyEvaluator(config.video_captioning,
-                                                            config.sentence_similarity,
-                                                            config.device)
+    video_caption_consistency_evaluator = VideoCaptionConsistencyEvaluator(config.video_captioning,
+                                                                           config.sentence_similarity,
+                                                                           config.device)
 
-    text2video_consistency_evaluator = Text2VideoConsistencyEvaluator(config, video_consistency_evaluator, None)
-    score = text2video_consistency_evaluator.evaluate(prompt, frames, debug=config.debug)
-    print(f"Consistency score: {score}")
+    tasks = {
+        "Video Caption Consistency": video_caption_consistency_evaluator,
+    }
+
+    text2video_consistency_evaluator = Text2VideoConsistencyEvaluator(config, tasks)
+    results = text2video_consistency_evaluator.evaluate(prompt, frames, debug=config.debug))
+    print(results)
 
 
 if __name__ == "__main__":
