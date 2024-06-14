@@ -1,6 +1,6 @@
 import torch
 
-from datatypes import BaseEvaluator
+from ..datatypes import BaseEvaluator
 from .sentence_similarity import SentenceSimilarityEvaluator
 from .video_captioning import VideoCaptioner
 

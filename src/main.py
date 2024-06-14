@@ -36,7 +36,7 @@ def main():
     }
 
     text2video_consistency_evaluator = Text2VideoConsistencyEvaluator(config, tasks)
-    results = text2video_consistency_evaluator.evaluate(prompt, frames, debug=config.debug))
+    results = text2video_consistency_evaluator.evaluate(prompt, frames, debug=config.debug)
     print(results)
 
 
