@@ -24,13 +24,15 @@ def main():
     parser.add_argument('--directory', type=str, help='Name of the directory containing the files')
     config = parse_args(parser)
 
-    video_consistency_evaluator = VideoCaptionConsistencyEvaluator(config.video_captioning,
-                                                                   config.sentence_similarity,
-                                                                   config.device)
+    video_caption_consistency_evaluator = VideoCaptionConsistencyEvaluator(config.video_captioning,
+                                                                           config.sentence_similarity,
+                                                                           config.device)
 
-    text2video_consistency_evaluator = Text2VideoConsistencyEvaluator(config,
-                                                                      video_consistency_evaluator,
-                                                                      None)
+    tasks = {
+        "Video Caption Consistency": video_caption_consistency_evaluator,
+    }
+
+    text2video_consistency_evaluator = Text2VideoConsistencyEvaluator(config, tasks)
 
     file_names = os.listdir(config.directory)
     file_paths = [os.path.join(config.directory, file) for file in file_names]
