@@ -1,13 +1,5 @@
 """
-Text-to-Video Model Evaluation Benchmark.
-
-Stage 1: Video-Prompt consistency:
-    - Generate a caption for a video
-    - Calculate the similarity between the caption and the video prompt
-
-Stage 2: Frame-Prompt consistency:
-    - Generate a list of captions for each video frame using the seedbench pipeline
-    - Input the captions accompanied by the initial prompt to an LLM and ask whether it matches the prompt
+This script evaluates the consistency between the generated video and the provided prompt, using a pipeline of tasks.
 """
 from dotenv import load_dotenv
 
@@ -15,8 +7,8 @@ load_dotenv()
 
 from config import create_parser, parse_args
 from utils import load_video_frames
-from text2video_consistency_evaluator import Text2VideoConsistencyEvaluator
-from evaluators import VideoCaptionConsistencyEvaluator
+from t2vbench import Text2VideoConsistencyEvaluator
+from t2vbench.evaluators import VideoCaptionConsistencyEvaluator
 
 
 

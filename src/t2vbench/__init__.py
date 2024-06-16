@@ -1,0 +1,1 @@
+from .text2video_consistency_evaluator import Text2VideoConsistencyEvaluator
