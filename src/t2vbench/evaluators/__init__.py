@@ -1,1 +1,2 @@
 from .video_caption_consistency.video_caption_consistency_evaluator import VideoCaptionConsistencyEvaluator
+from .object_counting.object_counter import ObjectCounter

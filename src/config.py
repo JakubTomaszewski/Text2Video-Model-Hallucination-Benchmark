@@ -13,6 +13,12 @@ def create_parser():
     parser.add_argument("--prompt", type=str, required=False)
     parser.add_argument("--device", type=str, default="cuda")
     parser.add_argument("--debug", action="store_true")
+    parser.add_argument("--prompts_file_path", type=str, default="data/prompts.json")
+    parser.add_argument("--image_processor_name", type=str, default="facebook/detr-resnet-50")
+    parser.add_argument("--image_model_name", type=str, default="facebook/detr-resnet-50")
+    parser.add_argument("--quantization", type=bool, default=True, help="Whether to quantize the cogvlm model or not to use less gpu resources but with less accuracy.")
+    parser.add_argument("--output_folder", type=str, default='output_int', help="Path to the output folder where the results will be saved.")
+    parser.add_argument("--template_num", type=int, default=2, help="Number of the template to use.")
 
     return parser
 
