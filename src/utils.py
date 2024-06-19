@@ -1,6 +1,7 @@
 import cv2
 import torch
 from PIL import Image
+from torchvision.transforms import ToTensor
 
 
 def load_video_frames(video_path: str):
@@ -22,10 +23,9 @@ def load_video_frames(video_path: str):
         
         # Convert the NumPy array to a PIL Image
         img = Image.fromarray(frame_rgb)
-        
-        # Convert PIL Image to PyTorch Tensor
-        tensor = torch.tensor(img)
-        frames.append(tensor)
+        img = img.convert("RGB")
+        img = ToTensor()(img)
+        frames.append(img)
     
     cap.release()
     return torch.stack(frames)

@@ -50,7 +50,8 @@ class ObjectCounter:
 
         # saves the results
         target_sizes = torch.tensor([[frame_width, frame_height]])
-        results = self.img_processor.post_process_object_detection(outputs, target_sizes=target_sizes, threshold=0.9)[0]
+        results = self.img_processor.post_process_object_detection(outputs, target_sizes=target_sizes, threshold=0.7)[0]
+        print("Predicted labels:", results["labels"])
 
         # dictionary that counts the appearance of every object in an image
         count_objects_image = {}
