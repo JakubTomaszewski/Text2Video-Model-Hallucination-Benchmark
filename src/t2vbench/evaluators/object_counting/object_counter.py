@@ -124,3 +124,6 @@ class ObjectCounter:
         frame_object_score /= n_frames
         frame_count_score /= n_frames
         return frame_object_score, frame_count_score
+    
+    def __call__(self, prompt: str, frames: torch.Tensor, debug: bool = False) -> tuple[float, float]:
+        return self.evaluate(prompt, frames, debug)

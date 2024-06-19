@@ -119,8 +119,6 @@ def get_image_transform(param):
         trans = [
             Resize(crop_size, interpolation=Image.BICUBIC),
             CenterCrop(crop_size),
-            lambda image: image.convert("RGB"),
-
         ]
     trans.extend([
         ToTensor(),

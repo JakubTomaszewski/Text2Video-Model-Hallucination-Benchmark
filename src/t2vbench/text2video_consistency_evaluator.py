@@ -1,3 +1,6 @@
+import torch
+
+
 class Text2VideoConsistencyEvaluator:
     """Evaluates the consistency between the text prompt and the video frames using a pipeline of tasks."""
     def __init__(self,
@@ -13,7 +16,7 @@ class Text2VideoConsistencyEvaluator:
         self.device = config.device
         self.tasks: dict[str, callable] = tasks
 
-    def evaluate(self, text_prompt, frames, debug=False) -> dict[str, float]:
+    def evaluate(self, text_prompt: str, frames: torch.Tensor, debug=False) -> dict[str, float]:
         """Evaluate the consistency between the text prompt and the video frames using the tasks in the pipeline.
 
         Args:
